@@ -13,11 +13,11 @@ class FakeResponseData {
     static let responseOK = HTTPURLResponse(url: URL(string: "https://www.openclassrooms.com")!,
                                             statusCode: 200,
                                             httpVersion: nil,
-                                            headerFields: nil)
+                                            headerFields: nil)!
     static let responseKO = HTTPURLResponse(url: URL(string: "https://www.openclassrooms.com")!,
                                             statusCode: 500,
                                             httpVersion: nil,
-                                            headerFields: nil)
+                                            headerFields: nil)!
     //Data
     static var correctData: Data {
         let bundle = Bundle(for: FakeResponseData.self)
