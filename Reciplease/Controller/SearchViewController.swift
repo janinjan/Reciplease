@@ -22,10 +22,7 @@ class SearchViewController: UIViewController {
     // MARK: - Properties
     let recipeService = RecipeService()
     var ingredientsList = [String]()
-    var imagesRecipeArray = [String]()
-    var titlesRecipeArray = [String]()
-    var yieldsRecipeArray = [Int]()
-    var totalTimesArray = [Int]()
+    var dataRecipes = [Hit]()
     var segueToCVidentifier = "segueToRecipesList"
 
     // MARK: - Actions
@@ -83,19 +80,8 @@ class SearchViewController: UIViewController {
         recipeService.getRecipe(ingredientLists: ingredientsList) { (success, data) in
             if let data = data, success {
                 self.toggleActivityIndicator(shown: false)
-                for titleLabel in data.hits {
-                    self.titlesRecipeArray.append(titleLabel.recipe.label)
-                }
-                for imageRecipe in data.hits {
-                    self.imagesRecipeArray.append(imageRecipe.recipe.image)
-                }
-                for yieldRecipe in data.hits {
-                    self.yieldsRecipeArray.append(yieldRecipe.recipe.yield)
-                }
-                for totalTimeRecipe in data.hits {
-                    self.totalTimesArray.append(totalTimeRecipe.recipe.totalTime)
-                }
-                if data.hits.isEmpty {
+                self.dataRecipes = data.hits
+                if self.dataRecipes.isEmpty {
                     print("Please remove one ingredient")
                 } else {
                 self.performToCollectionView()
@@ -113,10 +99,7 @@ extension SearchViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == segueToCVidentifier {
             guard let collectionVC = segue.destination as? RecipeCollectionViewController else { return }
-            collectionVC.titlesRecipeArray = titlesRecipeArray
-            collectionVC.imagesRecipeArray = imagesRecipeArray
-            collectionVC.yieldsRecipeArray = yieldsRecipeArray
-            collectionVC.totalTimesArray = totalTimesArray
+            collectionVC.dataRecipes = dataRecipes
         }
     }
 
