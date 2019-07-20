@@ -33,30 +33,28 @@ extension RecipeCollectionViewController: UICollectionViewDataSource, UICollecti
                                                             for: indexPath) as? RecipeListCollectionViewCell else {
             return UICollectionViewCell()
         }
-        cell.recipeListLabel.text = dataRecipes[indexPath.row].recipe.label
-        cell.yieldLabel.text = String(dataRecipes[indexPath.row].recipe.yield) + " people"
 
         cell.addShadowsToCell() // Add Shadows to cell
 
+        cell.recipeListLabel.text = dataRecipes[indexPath.row].recipe.label
+        cell.yieldLabel.text = String(dataRecipes[indexPath.row].recipe.yield) + " people"
+        // Displays recipe's total time
         let recipeTotalTime = dataRecipes[indexPath.row].recipe.totalTime
-        if  recipeTotalTime > 0 { // Display recipe total time if it is upper than 0
-            cell.totalTimeLabel.text = String(recipeTotalTime) + " min"
-            cell.totalTimeImageView.isHidden = false
-        } else {
-            cell.totalTimeLabel.text = nil
-            cell.totalTimeImageView.isHidden = true
-        }
-
+        cell.displayTime(recipeTotalTime)
+        // Displays recipe's image
         let imageURL = dataRecipes[indexPath.row].recipe.image
-        if let url = URL(string: imageURL) {
-            if let data = NSData(contentsOf: url) {
-                guard let image = UIImage(data: data as Data) else {  // Convert url to image
-                    return UICollectionViewCell()
-                }
-                let constratedImage = cell.increaseContrast(image)
-                cell.recipeListImageView.image = constratedImage // Add contrast to recipe image
-            }
-        }
+        cell.convertUrlToImage(imageURL)
+
         return cell
     }
+}
+    // MARK: - UICollectionViewDelegateFlowLayout
+    extension RecipeCollectionViewController: UICollectionViewDelegateFlowLayout {
+        // Cell Size
+        func collectionView(_ collectionView: UICollectionView,
+                            layout collectionViewLayout: UICollectionViewLayout,
+                            sizeForItemAt indexPath: IndexPath) -> CGSize {
+            let side = (view.frame.width - 30)
+            return CGSize(width: side, height: 258)
+        }
 }

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+   Apikeys.plist
+   Reciplease
+
+   Created by Janin Culhaoglu on 18/07/2019.
+   Copyright (c) 2019 Janin Culhaoglu. All rights reserved.
+-->
+<plist version="1.0">
+    <dict>
+        <key>app_key</key>
+        <string></string>
+        <key>app_id</key>
+        <string></string>
+    </dict>
+</plist>

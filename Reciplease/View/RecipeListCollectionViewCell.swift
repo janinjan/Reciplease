@@ -45,4 +45,28 @@ class RecipeListCollectionViewCell: UICollectionViewCell {
         guard let img = context.createCGImage(outputImage, from: outputImage.extent) else { return UIImage() }
         return UIImage(cgImage: img)
     }
+
+    // Displays recipe total time
+    func displayTime(_ recipeTime: Int) {
+        if  recipeTime > 0 { // Display recipe total time if it is upper than 0
+            totalTimeLabel.text = String(recipeTime) + " min"
+            totalTimeImageView.isHidden = false
+        } else {
+            totalTimeLabel.text = nil
+            totalTimeImageView.isHidden = true
+        }
+    }
+
+    // Convert String URL to UIImage
+    func convertUrlToImage(_ imageUrl: String) {
+        if let url = URL(string: imageUrl) {
+            if let data = NSData(contentsOf: url) {
+                guard let image = UIImage(data: data as Data) else {  // Convert url to image
+                return
+                }
+                let constratedImage = increaseContrast(image)
+                recipeListImageView.image = constratedImage // Add contrast to recipe image
+            }
+        }
+    }
 }
