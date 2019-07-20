@@ -33,21 +33,24 @@ extension RecipeCollectionViewController: UICollectionViewDataSource, UICollecti
                                                             for: indexPath) as? RecipeListCollectionViewCell else {
             return UICollectionViewCell()
         }
-
         cell.addShadowsToCell() // Add Shadows to cell
 
-        cell.recipeListLabel.text = dataRecipes[indexPath.row].recipe.label
-        cell.yieldLabel.text = String(dataRecipes[indexPath.row].recipe.yield) + " people"
-        // Displays recipe's total time
+        let recipTitle = dataRecipes[indexPath.row].recipe.label
         let recipeTotalTime = dataRecipes[indexPath.row].recipe.totalTime
-        cell.displayTime(recipeTotalTime)
-        // Displays recipe's image
-        let imageURL = dataRecipes[indexPath.row].recipe.image
-        cell.convertUrlToImage(imageURL)
+        let recipYield = String(dataRecipes[indexPath.row].recipe.yield)
+        let recipImage = dataRecipes[indexPath.row].recipe.image
+        let recipIngredient = dataRecipes[indexPath.row].recipe.ingredientLines
+
+        cell.recipeListLabel.text = recipTitle // Displays recipe's title
+        cell.yieldLabel.text = recipYield + " people" // Displays number of serving
+        cell.displayTime(recipeTotalTime)  // Displays recipe's total time
+        cell.convertUrlToImage(recipImage) // Displays recipe's image
+        cell.ingredientLabel.text = recipIngredient.joined(separator: ", ")
 
         return cell
     }
 }
+
     // MARK: - UICollectionViewDelegateFlowLayout
     extension RecipeCollectionViewController: UICollectionViewDelegateFlowLayout {
         // Cell Size
