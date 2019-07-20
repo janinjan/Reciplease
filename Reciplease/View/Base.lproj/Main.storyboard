@@ -30,16 +30,16 @@
                                 <rect key="frame" x="10" y="160.5" width="394" height="637.5"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SCg-bi-mD8">
-                                        <rect key="frame" x="0.0" y="0.0" width="394" height="33.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="394" height="36"/>
                                         <subviews>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Lemon, Cheese, Sausages..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Z7q-LP-i7d">
-                                                <rect key="frame" x="0.0" y="0.0" width="281.5" height="33.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="281.5" height="36"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textField>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MCh-Ty-6a7">
-                                                <rect key="frame" x="281.5" y="0.0" width="112.5" height="33.5"/>
+                                                <rect key="frame" x="281.5" y="0.0" width="112.5" height="36"/>
                                                 <color key="backgroundColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                 <state key="normal" title="Add">
@@ -55,13 +55,13 @@
                                         </constraints>
                                     </stackView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" Your ingredients :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sy9-w3-XlS">
-                                        <rect key="frame" x="0.0" y="48.5" width="394" height="21.5"/>
+                                        <rect key="frame" x="0.0" y="51" width="394" height="21.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                         <color key="textColor" red="0.21568627450980393" green="0.20000000000000001" blue="0.19607843137254902" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <tableView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="45" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="sKS-v1-PlB">
-                                        <rect key="frame" x="0.0" y="85" width="394" height="492.5"/>
+                                        <rect key="frame" x="0.0" y="87.5" width="394" height="490"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ingredientCell" textLabel="RnC-qh-kN5" rowHeight="45" style="IBUITableViewCellStyleDefault" id="uOO-x3-KcI">
@@ -317,6 +317,59 @@
             </objects>
             <point key="canvasLocation" x="1682.608695652174" y="-402.45535714285711"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="1nI-f8-st4">
+            <objects>
+                <viewController id="Xsd-Dh-1jx" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="UtE-t8-G8v">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="reciplease_background" translatesAutoresizingMaskIntoConstraints="NO" id="oA6-Eq-dvo">
+                                <rect key="frame" x="20" y="100" width="374" height="233"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y6f-ci-CIA">
+                                <rect key="frame" x="20" y="434" width="374" height="251"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <string key="text">- 4 cups low-sodium chicken broth
+- 1 tablespoon unsalted butter
+- 1 1/4 teaspoons coarse salt
+- 1/4 teaspoon ground pepper
+- 1 pound chicken tenderloins
+- cut into 1-inch pieces
+- 1 pound orzo
+ - 2 cups crumbled feta (4 ounces)
+- 1/4 cup coarsely chopped fresh dill
+- 2 teaspoons finely grated lemon zest
+- plus 1 tablespoon fresh lemon juice
+- 1 cup grated Parmesan</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Chicken, Lemon, And Dill With Orzo" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bDn-mS-44F">
+                                <rect key="frame" x="20" y="341" width="374" height="55"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="20"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Ingredients" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cPF-ge-8YD">
+                                <rect key="frame" x="20" y="404" width="91" height="22"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="0.97658449411392212" green="0.96872895956039429" blue="0.96433538198471069" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <viewLayoutGuide key="safeArea" id="QgE-7Q-fp3"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0y3-Xx-UZI" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2999" y="-402"/>
+        </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="f1o-2j-4H1">
             <objects>
@@ -361,7 +414,7 @@
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <textAttributes key="titleTextAttributes">
-                            <fontDescription key="fontDescription" name="TheBredan" family="The Bredan" pointSize="45"/>
+                            <fontDescription key="fontDescription" name="TheBredan" family="The Bredan" pointSize="37"/>
                             <color key="textColor" red="0.12984204290000001" green="0.12984612579999999" blue="0.12984395030000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </textAttributes>
                     </navigationBar>

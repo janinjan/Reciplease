@@ -22,11 +22,15 @@ class EdamamSessionFake: EdemamProtocol {
         let httpResponse = fakeResponse.response
         let data = fakeResponse.data
         let error = fakeResponse.error
-        let result = Request.serializeResponseJSON(options: .allowFragments,
-                                                   response: httpResponse,
-                                                   data: data,
-                                                   error: error)
-        let urlRequest = URLRequest(url: URL(string: urlWithKey)!)
+        let result: Result<Any>
+        let urlRequest = URLRequest(url: URL(string: "https://google.fr")!)
+
+        if let requestError = error {
+            result = .failure(requestError)
+        } else {
+            result = .success("success")
+        }
+
         completionHandler(DataResponse(request: urlRequest, response: httpResponse, data: data, result: result))
     }
 }

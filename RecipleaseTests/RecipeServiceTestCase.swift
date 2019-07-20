@@ -65,24 +65,24 @@ class RecipeServiceTestCase: XCTestCase {
         }
         wait(for: [expectation], timeout: 0.01)
     }
-    
-//    func testGetRecipeShouldPostFailedCallbackIfResponseKO() {
-//        //Given
-//        let fakeResponse = FakeResponse(response: FakeResponseData.responseKO,
-//                                        data: FakeResponseData.correctData,
-//                                        error: nil)
-//        let edamamSessionFake = EdamamSessionFake(fakeResponse: fakeResponse)
-//        let recipeService = RecipeService(edamamSession: edamamSessionFake)
-//        //When
-//        let expectation = XCTestExpectation(description: "Wait for queue change.")
-//        recipeService.getRecipe(ingredientLists: ["chocolate"]) { (success, recipe) in
-//            //Then
-//            XCTAssertFalse(success)
-//            XCTAssertNil(recipe)
-//            expectation.fulfill()
-//        }
-//        wait(for: [expectation], timeout: 0.01)
-//    }
+
+    func testGetRecipeShouldPostFailedCallbackIfResponseKO() {
+        //Given
+        let fakeResponse = FakeResponse(response: FakeResponseData.responseKO,
+                                        data: FakeResponseData.correctData,
+                                        error: nil)
+        let edamamSessionFake = EdamamSessionFake(fakeResponse: fakeResponse)
+        let recipeService = RecipeService(edamamSession: edamamSessionFake)
+        //When
+        let expectation = XCTestExpectation(description: "Wait for queue change.")
+        recipeService.getRecipe(ingredientLists: ["chocolate"]) { (success, recipe) in
+            //Then
+            XCTAssertFalse(success)
+            XCTAssertNil(recipe)
+            expectation.fulfill()
+        }
+        wait(for: [expectation], timeout: 0.01)
+    }
 
     func testGetRecipeShouldPostFailedCallbackIfResponseCorrectAndNilData() {
         //Given

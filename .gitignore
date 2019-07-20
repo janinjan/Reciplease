@@ -4,7 +4,8 @@ Build/*
 *.mode2v3 
 *.mode1v3 
 *.xcworkspace 
-xcuserdata 
+xcuserdata
+ApiKeys.plist
 
 # OSX Noise 
 .DS_Store 

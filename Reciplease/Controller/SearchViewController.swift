@@ -146,7 +146,7 @@ extension SearchViewController: UITableViewDelegate {
         label.textColor = .darkGray
         return label
     }
-    
+
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return ingredientsList.isEmpty ? 200 : 0
     }

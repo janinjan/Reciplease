@@ -16,7 +16,7 @@ class RecipeListCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var totalTimeLabel: UILabel!
     @IBOutlet weak var totalTimeImageView: UIImageView!
     @IBOutlet weak var whiteView: UIView!
-    
+
     // MARK: - Methods
     // Add shadows and border to cells
     func addShadowsToCell() {
@@ -31,7 +31,7 @@ class RecipeListCollectionViewCell: UICollectionViewCell {
     layer.masksToBounds = false
     layer.shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: contentView.layer.cornerRadius).cgPath
     }
-    
+
     // Add contrast to recipe image
     func increaseContrast(_ image: UIImage) -> UIImage {
         guard let inputImage = CIImage(image: image) else { return UIImage() }
@@ -40,7 +40,7 @@ class RecipeListCollectionViewCell: UICollectionViewCell {
             "inputSaturation": NSNumber(value: 1.05)
         ]
         let outputImage = inputImage.applyingFilter("CIColorControls", parameters: parameters)
-        
+
         let context = CIContext(options: nil)
         guard let img = context.createCGImage(outputImage, from: outputImage.extent) else { return UIImage() }
         return UIImage(cgImage: img)

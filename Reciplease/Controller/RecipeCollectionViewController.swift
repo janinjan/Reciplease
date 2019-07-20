@@ -27,8 +27,12 @@ extension RecipeCollectionViewController: UICollectionViewDataSource, UICollecti
         return dataRecipes.count
     }
 
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RecipeCell", for: indexPath) as! RecipeListCollectionViewCell
+    func collectionView(_ collectionView: UICollectionView,
+                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RecipeCell",
+                                                            for: indexPath) as? RecipeListCollectionViewCell else {
+            return UICollectionViewCell()
+        }
         cell.recipeListLabel.text = dataRecipes[indexPath.row].recipe.label
         cell.yieldLabel.text = String(dataRecipes[indexPath.row].recipe.yield) + " people"
 
@@ -46,7 +50,9 @@ extension RecipeCollectionViewController: UICollectionViewDataSource, UICollecti
         let imageURL = dataRecipes[indexPath.row].recipe.image
         if let url = URL(string: imageURL) {
             if let data = NSData(contentsOf: url) {
-                guard let image = UIImage(data: data as Data) else { return UICollectionViewCell() } // Convert url to image
+                guard let image = UIImage(data: data as Data) else {  // Convert url to image
+                    return UICollectionViewCell()
+                }
                 let constratedImage = cell.increaseContrast(image)
                 cell.recipeListImageView.image = constratedImage // Add contrast to recipe image
             }

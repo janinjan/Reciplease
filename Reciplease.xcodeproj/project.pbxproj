@@ -24,6 +24,8 @@
 		3D46300122C7B49300B00778 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3D46300022C7B49300B00778 /* Assets.xcassets */; };
 		3D46300422C7B49300B00778 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D46300222C7B49300B00778 /* LaunchScreen.storyboard */; };
 		3D8A44D522DDF7A000F8A838 /* The Bredan Demo.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3D8A44D422DDF7A000F8A838 /* The Bredan Demo.otf */; };
+		3D8A44D822E11A6000F8A838 /* ApiKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8A44D722E11A6000F8A838 /* ApiKeys.swift */; };
+		3D8A44DA22E11A9E00F8A838 /* ApiKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3D8A44D922E11A9E00F8A838 /* ApiKeys.plist */; };
 		3DC287FB22DB35E100C9716C /* FavoriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DC287FA22DB35E100C9716C /* FavoriteViewController.swift */; };
 		3DC287FF22DB7AE600C9716C /* RecipeListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DC287FE22DB7AE600C9716C /* RecipeListCollectionViewCell.swift */; };
 		3DC2880322DB807400C9716C /* RecipeCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DC2880222DB807400C9716C /* RecipeCollectionViewController.swift */; };
@@ -61,6 +63,8 @@
 		3D46300A22C7B49400B00778 /* RecipleaseTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RecipleaseTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D46301022C7B49400B00778 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3D8A44D422DDF7A000F8A838 /* The Bredan Demo.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "The Bredan Demo.otf"; sourceTree = "<group>"; };
+		3D8A44D722E11A6000F8A838 /* ApiKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiKeys.swift; sourceTree = "<group>"; };
+		3D8A44D922E11A9E00F8A838 /* ApiKeys.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = ApiKeys.plist; sourceTree = "<group>"; };
 		3DC287FA22DB35E100C9716C /* FavoriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteViewController.swift; sourceTree = "<group>"; };
 		3DC287FE22DB7AE600C9716C /* RecipeListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeListCollectionViewCell.swift; sourceTree = "<group>"; };
 		3DC2880222DB807400C9716C /* RecipeCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCollectionViewController.swift; sourceTree = "<group>"; };
@@ -193,10 +197,12 @@
 		3D9122ED22C7B75B0030DC77 /* SupportingFiles */ = {
 			isa = PBXGroup;
 			children = (
+				3D8A44D922E11A9E00F8A838 /* ApiKeys.plist */,
 				3D8A44D622DFB98300F8A838 /* Fonts */,
 				3D46300522C7B49300B00778 /* Info.plist */,
 				3D46300022C7B49300B00778 /* Assets.xcassets */,
 				3D462FF622C7B49200B00778 /* AppDelegate.swift */,
+				3D8A44D722E11A6000F8A838 /* ApiKeys.swift */,
 			);
 			path = SupportingFiles;
 			sourceTree = "<group>";
@@ -230,6 +236,7 @@
 				3D462FF022C7B49200B00778 /* Frameworks */,
 				3D462FF122C7B49200B00778 /* Resources */,
 				165E58258E2E4EE7740D7F49 /* [CP] Embed Pods Frameworks */,
+				3D8A44DB22E269DC00F8A838 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -304,6 +311,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3D8A44DA22E11A9E00F8A838 /* ApiKeys.plist in Resources */,
 				3D46300422C7B49300B00778 /* LaunchScreen.storyboard in Resources */,
 				3D8A44D522DDF7A000F8A838 /* The Bredan Demo.otf in Resources */,
 				3D46300122C7B49300B00778 /* Assets.xcassets in Resources */,
@@ -338,6 +346,23 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Reciplease/Pods-Reciplease-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		3D8A44DB22E269DC00F8A838 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 		};
 		6EC8D41D98B6FF884D8F3B50 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -409,6 +434,7 @@
 			files = (
 				3DC2880322DB807400C9716C /* RecipeCollectionViewController.swift in Sources */,
 				3DD7342B22C7BBF7002EB00E /* SearchViewController.swift in Sources */,
+				3D8A44D822E11A6000F8A838 /* ApiKeys.swift in Sources */,
 				3DC287FF22DB7AE600C9716C /* RecipeListCollectionViewCell.swift in Sources */,
 				3D1BFD8D22D4F3DC0063A332 /* RecipeService.swift in Sources */,
 				3D462FFF22C7B49200B00778 /* Reciplease.xcdatamodeld in Sources */,
