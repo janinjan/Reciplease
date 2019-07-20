@@ -16,6 +16,7 @@ class RecipeListCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var totalTimeLabel: UILabel!
     @IBOutlet weak var totalTimeImageView: UIImageView!
     @IBOutlet weak var whiteView: UIView!
+    @IBOutlet weak var ingredientLabel: UILabel!
 
     // MARK: - Methods
     // Add shadows and border to cells

@@ -69,25 +69,33 @@ class SearchViewController: UIViewController {
     private func getIngredientName() {
         guard let enteredText = ingredientTextField.text else { return }
         if enteredText == "" || enteredText == " " || enteredText == "." {
-            print("invalid ingredient name")
+            print("nothing to add")
         } else {
-        ingredientsList.append(enteredText)
+        let formattedEnteredText = enteredText.replacingOccurrences(of: " ", with: "")
+        ingredientsList.append(formattedEnteredText)
         }
     }
 
     private func getRecipes() {
       toggleActivityIndicator(shown: true)
+        // Controls that ingredients list array is not empty
+        guard !ingredientsList.isEmpty else {
+            presentAlert(ofType: .addIngredient)
+            toggleActivityIndicator(shown: false)
+            return
+        }
+        // Get recipes list
         recipeService.getRecipe(ingredientLists: ingredientsList) { (success, data) in
             if let data = data, success {
                 self.toggleActivityIndicator(shown: false)
                 self.dataRecipes = data.hits
-                if self.dataRecipes.isEmpty {
-                    print("Please remove one ingredient")
+                if self.dataRecipes.isEmpty { // If ingredient entered name is invalid, data from API call is empty
+                        self.presentAlert(ofType: .removeIngredient)
                 } else {
                 self.performToCollectionView()
                 }
             } else {
-                print("No Recipes found2")
+                self.presentAlert(ofType: .noRecipeFound)
                 self.toggleActivityIndicator(shown: false)
             }
         }
@@ -106,8 +114,6 @@ extension SearchViewController {
     func performToCollectionView() {
         if !ingredientsList.isEmpty {
             self.performSegue(withIdentifier: segueToCVidentifier, sender: SearchViewController.self)
-        } else {
-            print("Please add some ingredient to list")
         }
     }
 }
