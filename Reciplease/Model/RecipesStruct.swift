@@ -19,25 +19,12 @@ struct Hit: Decodable {
 
 // MARK: - Recipe
 struct Recipe: Decodable {
-    let uri: String
+//    let uri: String
     let label: String
     let image: String
-    let source: String
-    let url: String
+//    let source: String
+//    let url: String
     let yield: Int
-    let dietLabels: [String]
-    let healthLabels: [String]
-    let cautions: [String]
     let ingredientLines: [String]
-    let ingredients: [Ingredient]
-//    let calories, totalWeight: Double
     let totalTime: Int
-//    let totalNutrients, totalDaily: [String: Total]
-//    let digest: [Digest]
-}
-
-// MARK: - Ingredient
-struct Ingredient: Decodable {
-    let text: String
-//    let weight: Double
 }

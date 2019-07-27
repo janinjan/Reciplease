@@ -71,13 +71,13 @@ class SearchViewController: UIViewController {
         if enteredText == "" || enteredText == " " || enteredText == "." {
             print("nothing to add")
         } else {
-        let formattedEnteredText = enteredText.replacingOccurrences(of: " ", with: "")
-        ingredientsList.append(formattedEnteredText)
+            let formattedEnteredText = enteredText.replacingOccurrences(of: " ", with: "")
+            ingredientsList.append(formattedEnteredText)
         }
     }
 
     private func getRecipes() {
-      toggleActivityIndicator(shown: true)
+        toggleActivityIndicator(shown: true)
         // Controls that ingredients list array is not empty
         guard !ingredientsList.isEmpty else {
             presentAlert(ofType: .addIngredient)
@@ -90,9 +90,9 @@ class SearchViewController: UIViewController {
                 self.toggleActivityIndicator(shown: false)
                 self.dataRecipes = data.hits
                 if self.dataRecipes.isEmpty { // If ingredient entered name is invalid, data from API call is empty
-                        self.presentAlert(ofType: .removeIngredient)
+                    self.presentAlert(ofType: .removeIngredient)
                 } else {
-                self.performToCollectionView()
+                    self.performToCollectionView()
                 }
             } else {
                 self.presentAlert(ofType: .noRecipeFound)
@@ -115,45 +115,5 @@ extension SearchViewController {
         if !ingredientsList.isEmpty {
             self.performSegue(withIdentifier: segueToCVidentifier, sender: SearchViewController.self)
         }
-    }
-}
-
-extension SearchViewController: UITableViewDataSource {
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return ingredientsList.count
-    }
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ingredientCell", for: indexPath)
-        let ingredient = ingredientsList[indexPath.row]
-        cell.textLabel?.text = "-  " + ingredient
-                cell.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.3)
-        return cell
-    }
-
-    func tableView(_ tableView: UITableView,
-                   commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        guard editingStyle == .delete else { return }
-        ingredientsList.remove(at: indexPath.row)
-        tableView.deleteRows(at: [indexPath], with: .fade)
-    }
-}
-
-extension SearchViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let label = UILabel()
-        label.text = "Add some ingredient in the list"
-        label.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
-        label.textAlignment = .center
-        label.textColor = .darkGray
-        return label
-    }
-
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return ingredientsList.isEmpty ? 200 : 0
     }
 }

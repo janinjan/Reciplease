@@ -9,6 +9,7 @@
 import UIKit
 
 class RecipeListCollectionViewCell: UICollectionViewCell {
+
     // MARK: - Outlets
     @IBOutlet weak var recipeListImageView: UIImageView!
     @IBOutlet weak var recipeListLabel: UILabel!
@@ -17,11 +18,40 @@ class RecipeListCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var totalTimeImageView: UIImageView!
     @IBOutlet weak var whiteView: UIView!
     @IBOutlet weak var ingredientLabel: UILabel!
+    @IBOutlet weak var favButton: FavoriteButton!
+
+    var hit: Hit? { // DataSource for RecipeCollectionViewController
+        didSet {
+            guard let hit = hit else { return }
+            recipeListLabel.text = hit.recipe.label // Displays recipe's title
+            yieldLabel.text = String(hit.recipe.yield) + " people" // Displays number of serving
+            displayTime(hit.recipe.totalTime)  // Displays recipe's total time
+            convertUrlToImage(hit.recipe.image) // Displays recipe's image
+            ingredientLabel.text = hit.recipe.ingredientLines.joined(separator: ", ")
+        }
+    }
+
+    override func awakeFromNib() {
+        addShadowsToCell()
+    }
+
+    // MARK: - Actions
+    @IBAction func didTapFavoriteButton(_ sender: Any) {
+        if !favButton.isOn { // If favorite button is deselected
+            print("no favorite")
+        } else {
+            print("favorite")
+            guard let hit = hit else { return }
+            RecipeEntity.addRecipeToFavorite(hit: hit)
+        }
+    }
 
     // MARK: - Methods
     // Add shadows and border to cells
     func addShadowsToCell() {
         contentView.layer.cornerRadius = 8.0
+        whiteView.layer.cornerRadius = 8.0
+        recipeListImageView.layer.cornerRadius = 8.0
         contentView.layer.borderWidth = 1.0
         contentView.layer.borderColor = UIColor.clear.cgColor
         contentView.layer.masksToBounds = false

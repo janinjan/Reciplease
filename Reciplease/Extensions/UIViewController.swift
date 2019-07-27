@@ -10,8 +10,8 @@ import UIKit
 
 extension UIViewController {
     /**
-    * enum for every error cases
-    */
+     * enum for every error cases
+     */
     enum AlertType {
         case noRecipeFound
         case addIngredient
