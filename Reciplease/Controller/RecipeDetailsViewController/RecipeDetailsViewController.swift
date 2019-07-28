@@ -32,7 +32,9 @@ class RecipeDetailsViewController: UIViewController {
     }
 
     @IBAction func didTapGetDirections(_ sender: Any) {
-        print("go to website")
+        guard let currentRecipeUrl = recipe?.url else { return }
+        guard let url = URL(string: currentRecipeUrl) else { return }
+        UIApplication.shared.open(url) // Open recipe directions in Safari
     }
 
     func displayRecipesInformation() {

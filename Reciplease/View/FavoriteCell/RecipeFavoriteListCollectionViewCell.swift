@@ -62,7 +62,7 @@ class RecipeFavoriteListCollectionViewCell: UICollectionViewCell {
         didSet {
             if isInEditingMode {
                 checkImageView.image = UIImage(named: isSelected ? "Checked" : "Unchecked")
-                let bgColor = isSelected ? #colorLiteral(red: 1, green: 0.3540142722, blue: 0.2752175228, alpha: 1) : #colorLiteral(red: 0.9764705882, green: 0.968627451, blue: 0.9647058824, alpha: 1)
+                let bgColor = isSelected ? #colorLiteral(red: 0.9882352941, green: 0.2392156863, blue: 0.2235294118, alpha: 1) : #colorLiteral(red: 0.9764705882, green: 0.968627451, blue: 0.9647058824, alpha: 1)
                 whiteView.backgroundColor = bgColor
             }
         }
