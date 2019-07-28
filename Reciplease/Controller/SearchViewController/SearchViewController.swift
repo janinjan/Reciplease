@@ -15,13 +15,23 @@ class SearchViewController: UIViewController {
     @IBOutlet weak var searchView: UIView!
     @IBOutlet weak var ingredientTextField: UITextField!
     @IBOutlet weak var addButton: UIButton!
+    @IBOutlet weak var clearButton: UIBarButtonItem!
     @IBOutlet weak var searchRecipesButton: UIButton!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var tableView: UITableView!
 
     // MARK: - Properties
     let recipeService = RecipeService()
-    var ingredientsList = [String]()
+    var ingredientsList = [String]() {
+        didSet { // Show "Clear" bar button item if ingredientList is not empty
+            if ingredientsList.count > 0 {
+                toggleNavigationButtonItem(shown: true, tintColor: #colorLiteral(red: 0.2470588235, green: 0.5843137255, blue: 0.9921568627, alpha: 1))
+            } else {
+                toggleNavigationButtonItem(shown: false, tintColor: .clear)
+            }
+        }
+    }
+
     var dataRecipes = [Hit]()
     let segueToCVidentifier = "segueToRecipesList"
 
@@ -31,6 +41,11 @@ class SearchViewController: UIViewController {
         tableView.reloadData()
         ingredientTextField.text = ""
         ingredientTextField.resignFirstResponder()
+    }
+
+    @IBAction func clearIngredient(_ sender: Any) {
+        ingredientsList.removeAll()
+        tableView.reloadData()
     }
 
     @IBAction func searchRecipes(_ sender: Any) {
@@ -48,6 +63,7 @@ class SearchViewController: UIViewController {
         searchView.layer.cornerRadius = 6
         addButton.layer.cornerRadius = 4
         ingredientTextField.delegate = self
+        toggleNavigationButtonItem(shown: false, tintColor: .clear) // hide clear bar button item
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -61,6 +77,11 @@ class SearchViewController: UIViewController {
             self.whatInFridgeLabelConstraint.constant += self.view.bounds.width
             self.view.layoutIfNeeded()
         }, completion: nil)
+    }
+
+    private func toggleNavigationButtonItem(shown: Bool, tintColor: UIColor) {
+        clearButton.isEnabled = shown
+        clearButton.tintColor = tintColor
     }
 
     private func toggleActivityIndicator(shown: Bool) {

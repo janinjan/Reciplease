@@ -153,10 +153,16 @@
                     </view>
                     <navigationItem key="navigationItem" title="Reciplease" id="enn-Cp-kG3">
                         <barButtonItem key="backBarButtonItem" title="Search" id="gJK-bG-47P"/>
+                        <barButtonItem key="rightBarButtonItem" title="Clear All" id="qg5-6V-e0Z">
+                            <connections>
+                                <action selector="clearIngredient:" destination="61p-u2-MVh" id="3GH-V2-d0g"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="activityIndicator" destination="r9D-GB-Do6" id="zCL-oe-Gnq"/>
                         <outlet property="addButton" destination="MCh-Ty-6a7" id="YBP-xd-RUA"/>
+                        <outlet property="clearButton" destination="qg5-6V-e0Z" id="xDc-jm-gOL"/>
                         <outlet property="ingredientTextField" destination="Z7q-LP-i7d" id="fXT-19-BMI"/>
                         <outlet property="searchRecipesButton" destination="dQG-Nb-T3K" id="y5k-Xm-dwv"/>
                         <outlet property="searchView" destination="kAd-EL-L0f" id="ESi-uM-mlO"/>
@@ -691,6 +697,7 @@
                     </toolbarItems>
                     <navigationItem key="navigationItem" title="Reciplease" id="QoJ-ze-gxk">
                         <barButtonItem key="rightBarButtonItem" title="Clear All" id="go4-S3-evS">
+                            <color key="tintColor" red="0.24705882352941178" green="0.58431372549019611" blue="0.99215686274509807" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="didTapClearAllButton:" destination="o98-8Z-Si6" id="3Fh-1g-YeJ"/>
                             </connections>
