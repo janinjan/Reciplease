@@ -36,7 +36,7 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="281.5" height="36"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
                                             </textField>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MCh-Ty-6a7">
                                                 <rect key="frame" x="281.5" y="0.0" width="112.5" height="36"/>
@@ -554,7 +554,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="zhI-PA-GFD">
-                                <rect key="frame" x="10" y="143" width="394" height="670"/>
+                                <rect key="frame" x="10" y="143" width="394" height="626"/>
                                 <color key="backgroundColor" red="0.97658449411392212" green="0.96872895956039429" blue="0.96433538198471069" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="qFp-sq-dw7">
                                     <size key="itemSize" width="172" height="200"/>
@@ -592,7 +592,7 @@
                                                                         <constraint firstAttribute="width" secondItem="e9Y-Ya-Qjt" secondAttribute="height" multiplier="1:1" id="h6Y-e1-N02"/>
                                                                     </constraints>
                                                                 </imageView>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4 personnes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="dHY-WV-8SS">
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4 " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="dHY-WV-8SS">
                                                                     <rect key="frame" x="28" y="0.0" width="54" height="24"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                     <color key="textColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -618,7 +618,7 @@
                                                             </constraints>
                                                         </stackView>
                                                     </subviews>
-                                                    <color key="backgroundColor" red="0.97658449410000003" green="0.96872895960000005" blue="0.96433538200000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="backgroundColor" red="0.97647058823529409" green="0.96862745098039216" blue="0.96470588235294119" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="trailing" secondItem="IGj-Tf-qjz" secondAttribute="trailing" constant="2" id="3OF-ly-jzW"/>
                                                         <constraint firstAttribute="trailing" secondItem="IQi-SI-Pmc" secondAttribute="trailing" constant="2" id="G0f-n8-q2E"/>
@@ -630,6 +630,13 @@
                                                         <constraint firstItem="IGj-Tf-qjz" firstAttribute="leading" secondItem="dSU-6J-rex" secondAttribute="leading" constant="2" id="jDh-wd-Woz"/>
                                                     </constraints>
                                                 </view>
+                                                <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Unchecked" translatesAutoresizingMaskIntoConstraints="NO" id="hAi-N9-1io">
+                                                    <rect key="frame" x="75" y="174" width="22" height="22"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="hAi-N9-1io" secondAttribute="height" multiplier="1:1" id="2Wi-q5-XuN"/>
+                                                        <constraint firstAttribute="width" constant="22" id="Qlp-EW-cXD"/>
+                                                    </constraints>
+                                                </imageView>
                                             </subviews>
                                         </view>
                                         <constraints>
@@ -639,9 +646,13 @@
                                             <constraint firstAttribute="trailing" secondItem="dSU-6J-rex" secondAttribute="trailing" id="dmh-Nd-2qX"/>
                                             <constraint firstAttribute="trailing" secondItem="njQ-Ce-Mc2" secondAttribute="trailing" id="eDb-WQ-Seg"/>
                                             <constraint firstAttribute="bottom" secondItem="njQ-Ce-Mc2" secondAttribute="bottom" id="fbm-jO-Vua"/>
+                                            <constraint firstAttribute="bottom" secondItem="hAi-N9-1io" secondAttribute="bottom" constant="4" id="gA2-wa-DKA"/>
                                             <constraint firstItem="njQ-Ce-Mc2" firstAttribute="leading" secondItem="Lm9-d2-lZS" secondAttribute="leading" id="gzv-Bw-HP5"/>
+                                            <constraint firstItem="hAi-N9-1io" firstAttribute="centerX" secondItem="Lm9-d2-lZS" secondAttribute="centerX" id="ylP-rE-52J"/>
                                         </constraints>
                                         <connections>
+                                            <outlet property="checkImageView" destination="hAi-N9-1io" id="gqL-PA-Iqh"/>
+                                            <outlet property="recipeInfoStackView" destination="IQi-SI-Pmc" id="6qB-mB-cep"/>
                                             <outlet property="recipeListImageView" destination="njQ-Ce-Mc2" id="HZT-Xu-oKt"/>
                                             <outlet property="recipeListLabel" destination="IGj-Tf-qjz" id="idv-5o-pL0"/>
                                             <outlet property="totalTimeImageView" destination="BSv-pH-6jl" id="kaX-Uh-cXJ"/>
@@ -669,6 +680,15 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="tmV-RU-4XN"/>
                     </view>
+                    <toolbarItems>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="5IR-BJ-Z7r"/>
+                        <barButtonItem systemItem="trash" id="4Ji-Fy-9ek">
+                            <connections>
+                                <action selector="deleteButtonTapped:" destination="o98-8Z-Si6" id="Qos-1R-Z8q"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="Wez-Z4-TFd"/>
+                    </toolbarItems>
                     <navigationItem key="navigationItem" title="Reciplease" id="QoJ-ze-gxk">
                         <barButtonItem key="rightBarButtonItem" title="Clear All" id="go4-S3-evS">
                             <connections>
@@ -676,6 +696,7 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="clearAllButton" destination="go4-S3-evS" id="75h-wz-0eN"/>
                         <outlet property="collectionView" destination="zhI-PA-GFD" id="TQt-MQ-kEI"/>
@@ -895,6 +916,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Unchecked" width="22" height="22"/>
         <image name="favorite_icon_bar" width="25" height="22"/>
         <image name="icons_clock" width="54" height="60"/>
         <image name="icons_meal" width="60" height="60"/>

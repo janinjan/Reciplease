@@ -7,9 +7,11 @@
 //
 
 import UIKit
-
+/**
+ * RecipeFavoriteListCollectionViewCell inherits from UICollectionViewCell class.
+ It defines the favorite recipe list cell's elements
+ */
 class RecipeFavoriteListCollectionViewCell: UICollectionViewCell {
-
     // MARK: - Outlets
     @IBOutlet weak var recipeListImageView: UIImageView!
     @IBOutlet weak var recipeListLabel: UILabel!
@@ -17,8 +19,11 @@ class RecipeFavoriteListCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var totalTimeLabel: UILabel!
     @IBOutlet weak var totalTimeImageView: UIImageView!
     @IBOutlet weak var whiteView: UIView!
+    @IBOutlet weak var recipeInfoStackView: UIStackView!
+    @IBOutlet weak var checkImageView: UIImageView!
 
-    var favorite: RecipeEntity? { // DataSource for FavoriteViewController
+    // MARK: - Properties
+    var favorite: RecipeEntity? { // Displays for FavoriteViewController
         didSet {
             guard let favorite = favorite else { return }
             recipeListLabel.text = favorite.nameAtb // Displays recipe's title
@@ -41,13 +46,35 @@ class RecipeFavoriteListCollectionViewCell: UICollectionViewCell {
         }
     }
 
+    // Implement Editing Mode
+    /**
+     * A property observer is created which will toggle the visibility of the checkmark label
+     according if the collection view controller is in editing mode or not.
+     */
+    var isInEditingMode: Bool = false {
+        didSet {
+            recipeInfoStackView.isHidden = isInEditingMode
+            checkImageView.isHidden = !isInEditingMode
+        }
+    }
+    // Another property observer is created which will display/remove the checkmark when the cell is selected or not.
+    override var isSelected: Bool {
+        didSet {
+            if isInEditingMode {
+                checkImageView.image = UIImage(named: isSelected ? "Checked" : "Unchecked")
+                let bgColor = isSelected ? #colorLiteral(red: 1, green: 0.3540142722, blue: 0.2752175228, alpha: 1) : #colorLiteral(red: 0.9764705882, green: 0.968627451, blue: 0.9647058824, alpha: 1)
+                whiteView.backgroundColor = bgColor
+            }
+        }
+    }
+
+    // MARK: - Methods
     override func awakeFromNib() {
         addShadowsToCell()
     }
 
-    // MARK: - Methods
     // Add shadows and border to cells
-    func addShadowsToCell() {
+    private func addShadowsToCell() {
         contentView.layer.cornerRadius = 8.0
         whiteView.layer.cornerRadius = 8.0
         recipeListImageView.layer.cornerRadius = 8.0
@@ -62,7 +89,7 @@ class RecipeFavoriteListCollectionViewCell: UICollectionViewCell {
     }
 
     // Add contrast to recipe image
-    func increaseContrast(_ image: UIImage) -> UIImage {
+    private func increaseContrast(_ image: UIImage) -> UIImage {
         guard let inputImage = CIImage(image: image) else { return UIImage() }
         let parameters = [
             "inputContrast": NSNumber(value: 1.05),

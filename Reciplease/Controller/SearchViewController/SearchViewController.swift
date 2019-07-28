@@ -23,13 +23,14 @@ class SearchViewController: UIViewController {
     let recipeService = RecipeService()
     var ingredientsList = [String]()
     var dataRecipes = [Hit]()
-    var segueToCVidentifier = "segueToRecipesList"
+    let segueToCVidentifier = "segueToRecipesList"
 
     // MARK: - Actions
     @IBAction func addIngredient(_ sender: Any) {
         getIngredientName()
         tableView.reloadData()
         ingredientTextField.text = ""
+        ingredientTextField.resignFirstResponder()
     }
 
     @IBAction func searchRecipes(_ sender: Any) {
@@ -46,6 +47,7 @@ class SearchViewController: UIViewController {
         searchRecipesButton.layer.cornerRadius = 6
         searchView.layer.cornerRadius = 6
         addButton.layer.cornerRadius = 4
+        ingredientTextField.delegate = self
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -115,5 +117,14 @@ extension SearchViewController {
         if !ingredientsList.isEmpty {
             self.performSegue(withIdentifier: segueToCVidentifier, sender: SearchViewController.self)
         }
+    }
+}
+
+// MARK: - UITextFieldDelegate Dismiss keyboard
+extension SearchViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        addIngredient(self)
+        return true
     }
 }

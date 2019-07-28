@@ -20,6 +20,7 @@ extension RecipeCollectionViewController: UICollectionViewDataSource {
                                                             for: indexPath) as? RecipeListCollectionViewCell else {
                                                                 return UICollectionViewCell()
         }
+        cell.delegate = self
         cell.hit = dataRecipes[indexPath.row]
 
         return cell

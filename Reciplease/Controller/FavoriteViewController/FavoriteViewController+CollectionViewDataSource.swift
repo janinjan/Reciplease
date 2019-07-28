@@ -23,7 +23,7 @@ extension FavoriteViewController: UICollectionViewDataSource {
         guard let favoriteCell = collectionView.dequeueReusableCell(withReuseIdentifier: "favoriteCell", for: indexPath)
             as? RecipeFavoriteListCollectionViewCell else { return UICollectionViewCell() }
         favoriteCell.favorite = favoriteRecipes[indexPath.row]
-
+        favoriteCell.isInEditingMode = isEditing
         return favoriteCell
     }
 }

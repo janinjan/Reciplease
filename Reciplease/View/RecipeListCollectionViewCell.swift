@@ -7,7 +7,16 @@
 //
 
 import UIKit
+/**
+ * Creation of a delegate protocol for recipe collection view cell
+ */
+protocol RecipeCellDelegate: class {
+    func addFavorite(cell: RecipeListCollectionViewCell)
+}
 
+/**
+ * RecipeListCollectionViewCell inherits from UICollectionViewCell class. It defines the recipe list cell's elements
+ */
 class RecipeListCollectionViewCell: UICollectionViewCell {
 
     // MARK: - Outlets
@@ -20,7 +29,9 @@ class RecipeListCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var ingredientLabel: UILabel!
     @IBOutlet weak var favButton: FavoriteButton!
 
-    var hit: Hit? { // DataSource for RecipeCollectionViewController
+    // MARK: - Properties
+    weak var delegate: RecipeCellDelegate? // created a delegate property
+    var hit: Hit? { // Displays for RecipeCollectionViewController
         didSet {
             guard let hit = hit else { return }
             recipeListLabel.text = hit.recipe.label // Displays recipe's title
@@ -31,24 +42,26 @@ class RecipeListCollectionViewCell: UICollectionViewCell {
         }
     }
 
-    override func awakeFromNib() {
-        addShadowsToCell()
-    }
-
     // MARK: - Actions
     @IBAction func didTapFavoriteButton(_ sender: Any) {
-        if !favButton.isOn { // If favorite button is deselected
-            print("no favorite")
-        } else {
-            print("favorite")
-            guard let hit = hit else { return }
-            RecipeEntity.addRecipeToFavorite(hit: hit)
+        if favButton.isOn {
+        delegate?.addFavorite(cell: self) // call the delegate ViewController
         }
     }
 
     // MARK: - Methods
+    override func awakeFromNib() {
+        addShadowsToCell()
+    }
+
+    //  Move the resetting code to the prepareForReuse method in the custom cell class
+    override func prepareForReuse() {
+        super.prepareForReuse() // invoke superclass implementation
+        favButton.activateButton(bool: false) // reset the favorite button
+    }
+
     // Add shadows and border to cells
-    func addShadowsToCell() {
+    private func addShadowsToCell() {
         contentView.layer.cornerRadius = 8.0
         whiteView.layer.cornerRadius = 8.0
         recipeListImageView.layer.cornerRadius = 8.0
@@ -60,11 +73,10 @@ class RecipeListCollectionViewCell: UICollectionViewCell {
         layer.shadowRadius = 4.0
         layer.shadowOpacity = 1.0
         layer.masksToBounds = false
-        layer.shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: contentView.layer.cornerRadius).cgPath
     }
 
     // Add contrast to recipe image
-    func increaseContrast(_ image: UIImage) -> UIImage {
+    private func increaseContrast(_ image: UIImage) -> UIImage {
         guard let inputImage = CIImage(image: image) else { return UIImage() }
         let parameters = [
             "inputContrast": NSNumber(value: 1.05),
@@ -78,7 +90,7 @@ class RecipeListCollectionViewCell: UICollectionViewCell {
     }
 
     // Displays recipe total time
-    func displayTime(_ recipeTime: Int) {
+    private func displayTime(_ recipeTime: Int) {
         if  recipeTime > 0 { // Display recipe total time if it is upper than 0
             totalTimeLabel.text = String(recipeTime) + " min"
             totalTimeImageView.isHidden = false
@@ -89,7 +101,7 @@ class RecipeListCollectionViewCell: UICollectionViewCell {
     }
 
     // Convert String URL to UIImage
-    func convertUrlToImage(_ imageUrl: String) {
+    private func convertUrlToImage(_ imageUrl: String) {
         guard let url = URL(string: imageUrl) else { return }
         if let data = try? Data(contentsOf: url) {
             guard let image = UIImage(data: data as Data) else { return }  // Convert url to image

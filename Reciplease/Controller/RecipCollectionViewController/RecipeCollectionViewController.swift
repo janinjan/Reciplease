@@ -16,7 +16,7 @@ class RecipeCollectionViewController: UIViewController {
     // MARK: - Properties
     var dataRecipes = [Hit]()
     var currentRecipe: Recipe?
-    var segueToDetailViewIdentifier = "segueToDetailVC"
+    let segueToDetailViewIdentifier = "segueToDetailVC"
 
     // MARK: - Methods
     override func viewDidLoad() {
@@ -40,5 +40,16 @@ extension RecipeCollectionViewController: UICollectionViewDelegateFlowLayout {
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         let side = (view.frame.width - 30)
         return CGSize(width: side, height: 258)
+    }
+}
+
+// MARK: - Implement protocol
+/**
+ * extension of view controller that adopts the protocol in order to conform to the layout defined in RecipeCellDelegate
+ */
+extension RecipeCollectionViewController: RecipeCellDelegate {
+    func addFavorite(cell: RecipeListCollectionViewCell) {
+        guard let hit = cell.hit else { return }
+        RecipeEntity.addRecipeToFavorite(hit: hit)
     }
 }
