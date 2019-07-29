@@ -12,6 +12,7 @@ import UIKit
  */
 protocol RecipeCellDelegate: class {
     func addFavorite(cell: RecipeListCollectionViewCell)
+    func deleteFavorite(cell: RecipeListCollectionViewCell)
 }
 
 /**
@@ -45,7 +46,9 @@ class RecipeListCollectionViewCell: UICollectionViewCell {
     // MARK: - Actions
     @IBAction func didTapFavoriteButton(_ sender: Any) {
         if favButton.isOn {
-        delegate?.addFavorite(cell: self) // call the delegate ViewController
+            delegate?.addFavorite(cell: self) // call the delegate ViewController
+        } else {
+            delegate?.deleteFavorite(cell: self)
         }
     }
 

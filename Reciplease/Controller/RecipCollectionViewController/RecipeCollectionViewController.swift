@@ -45,13 +45,18 @@ extension RecipeCollectionViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
-// MARK: - Implement protocol
+// MARK: - Implement protocol RecipeCellDelegate defines in RecipeListCollectionViewCell
 /**
  * extension of view controller that adopts the protocol in order to conform to the layout defined in RecipeCellDelegate
  */
 extension RecipeCollectionViewController: RecipeCellDelegate {
-    func addFavorite(cell: RecipeListCollectionViewCell) {
+    func addFavorite(cell: RecipeListCollectionViewCell) { // Add to favorite if favButton isOn
         guard let hit = cell.hit else { return }
         RecipeEntity.addRecipeToFavorite(hit: hit)
+    }
+
+    func deleteFavorite(cell: RecipeListCollectionViewCell) { // Remove from favorite if favButton !isOn
+        guard let hit = cell.hit else { return }
+        RecipeEntity.delete(names: [hit.recipe.label])
     }
 }
