@@ -12,10 +12,11 @@ extension FavoriteViewController: UICollectionViewDelegate {
     // If a cell is selected the trash icon is displayed, otherwise it remains hidden
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if !isEditing {
-            // I Have to add perfom to detail Favorite VC
+            favoriteRecipes = [favoriteRecipes[indexPath.row]]
+            performSegue(withIdentifier: segueToFavoriteDetailViewIdentifier, sender: self)
             navigationController?.setToolbarHidden(true, animated: true)
         } else {
-           navigationController?.setToolbarHidden(false, animated: true)
+            navigationController?.setToolbarHidden(false, animated: true)
         }
     }
 

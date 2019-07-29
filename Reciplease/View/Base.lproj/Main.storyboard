@@ -352,7 +352,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cXs-AU-Q9Y">
-                                <rect key="frame" x="0.0" y="88" width="414" height="729"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="685"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FiJ-G3-td6">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="900"/>
@@ -524,6 +524,7 @@
                     </view>
                     <size key="freeformSize" width="414" height="900"/>
                     <connections>
+                        <outlet property="favoriteButton" destination="W6s-Ay-fgM" id="BWj-Tf-as0"/>
                         <outlet property="getDirectionButton" destination="ydG-yO-H7g" id="pqY-20-Oqg"/>
                         <outlet property="recipeDetailImageView" destination="oA6-Eq-dvo" id="vAE-SK-CWr"/>
                         <outlet property="recipeListLabel" destination="bDn-mS-44F" id="PwL-1O-v6C"/>
@@ -535,7 +536,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0y3-Xx-UZI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2564" y="-402"/>
+            <point key="canvasLocation" x="2574" y="-27"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="f1o-2j-4H1">
@@ -717,6 +718,7 @@
                     <connections>
                         <outlet property="clearAllButton" destination="go4-S3-evS" id="75h-wz-0eN"/>
                         <outlet property="collectionView" destination="zhI-PA-GFD" id="TQt-MQ-kEI"/>
+                        <segue destination="Xsd-Dh-1jx" kind="show" identifier="segueFromFavToDetailVC" id="4MV-bD-3yt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Xvz-ab-WXc" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -939,4 +941,7 @@
         <image name="icons_meal" width="60" height="60"/>
         <image name="reciplease_background" width="455" height="758"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="4MV-bD-3yt"/>
+    </inferredMetricsTieBreakers>
 </document>

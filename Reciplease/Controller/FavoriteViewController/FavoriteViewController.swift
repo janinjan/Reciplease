@@ -13,6 +13,8 @@ class FavoriteViewController: UIViewController {
 
     // MARK: - Properties
     var favoriteRecipes = RecipeEntity.fetchAll()
+    let segueToFavoriteDetailViewIdentifier = "segueFromFavToDetailVC"
+    var isInFavorite: Bool = false
 
     // MARK: - Outlets
     @IBOutlet weak var collectionView: UICollectionView!
@@ -56,6 +58,15 @@ class FavoriteViewController: UIViewController {
         super.viewWillAppear(animated)
         favoriteRecipes = RecipeEntity.fetchAll()
         collectionView.reloadData()
+    }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == segueToFavoriteDetailViewIdentifier {
+            if let destination = segue.destination as? RecipeDetailsViewController {
+                destination.isInFavorite = true
+                destination.favoriteRecipes = favoriteRecipes // Perfom is in FavoriteVCDelegate extension
+            }
+        }
     }
 
     // This method will check if a cell is in editing mode

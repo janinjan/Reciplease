@@ -17,6 +17,7 @@ class RecipeCollectionViewController: UIViewController {
     var dataRecipes = [Hit]()
     var currentRecipe: Recipe?
     let segueToDetailViewIdentifier = "segueToDetailVC"
+    var isInFavorite: Bool = false
 
     // MARK: - Methods
     override func viewDidLoad() {
@@ -26,6 +27,7 @@ class RecipeCollectionViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == segueToDetailViewIdentifier {
             if let destination = segue.destination as? RecipeDetailsViewController {
+                destination.isInFavorite = false
                 destination.recipe = currentRecipe // Perfom is in RecipeControllerViewDelegate extension
             }
         }
