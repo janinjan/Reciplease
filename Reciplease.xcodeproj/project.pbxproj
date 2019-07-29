@@ -20,6 +20,7 @@
 		3D1BFD9E22D68D180063A332 /* Recipe.json in Resources */ = {isa = PBXBuildFile; fileRef = 3D1BFD9D22D68D180063A332 /* Recipe.json */; };
 		3D23DD7822E8C67E00A12930 /* Reciplease.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3D23DD7622E8C67E00A12930 /* Reciplease.xcdatamodeld */; };
 		3D23DD7A22E8C6A200A12930 /* RecipeEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D23DD7922E8C6A200A12930 /* RecipeEntity.swift */; };
+		3D2860C422EF34590083BF61 /* IngredientEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D2860C322EF34590083BF61 /* IngredientEntity.swift */; };
 		3D3E009522E39323005623E6 /* RecipeDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D3E009422E39323005623E6 /* RecipeDetailsViewController.swift */; };
 		3D462FF722C7B49200B00778 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D462FF622C7B49200B00778 /* AppDelegate.swift */; };
 		3D462FFC22C7B49200B00778 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D462FFA22C7B49200B00778 /* Main.storyboard */; };
@@ -67,6 +68,7 @@
 		3D1BFD9D22D68D180063A332 /* Recipe.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Recipe.json; sourceTree = "<group>"; };
 		3D23DD7722E8C67E00A12930 /* Reciplease.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Reciplease.xcdatamodel; sourceTree = "<group>"; };
 		3D23DD7922E8C6A200A12930 /* RecipeEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeEntity.swift; sourceTree = "<group>"; };
+		3D2860C322EF34590083BF61 /* IngredientEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientEntity.swift; sourceTree = "<group>"; };
 		3D3E009422E39323005623E6 /* RecipeDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailsViewController.swift; sourceTree = "<group>"; };
 		3D462FF322C7B49200B00778 /* Reciplease.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Reciplease.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D462FF622C7B49200B00778 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -295,6 +297,7 @@
 			isa = PBXGroup;
 			children = (
 				3D23DD7922E8C6A200A12930 /* RecipeEntity.swift */,
+				3D2860C322EF34590083BF61 /* IngredientEntity.swift */,
 			);
 			path = CoreDataEntity;
 			sourceTree = "<group>";
@@ -549,6 +552,7 @@
 				3D1BFD8B22D4F1C00063A332 /* RecipesStruct.swift in Sources */,
 				3DA96F4622E33A560041D7D3 /* UIViewController.swift in Sources */,
 				3D1BFD8F22D4F7D40063A332 /* EdamamProtocol.swift in Sources */,
+				3D2860C422EF34590083BF61 /* IngredientEntity.swift in Sources */,
 				3D462FF722C7B49200B00778 /* AppDelegate.swift in Sources */,
 				3DC287FB22DB35E100C9716C /* FavoriteViewController.swift in Sources */,
 				3DEA808222EA40F00059CF50 /* SearchViewController+TableViewDataSource.swift in Sources */,

@@ -21,7 +21,18 @@ class RecipeEntity: NSManagedObject {
         try? viewContext.save()
     }
 
-    static func addRecipeToFavorite(viewContext: NSManagedObjectContext = AppDelegate.viewContext, hit: Hit) {
+    static func delete(names: [String], viewContext: NSManagedObjectContext = AppDelegate.viewContext) {
+        let request: NSFetchRequest<RecipeEntity> = RecipeEntity.fetchRequest()
+        for name in names {
+            request.predicate = NSPredicate(format: "nameAtb = %@", name)
+            guard let favoriteRecipes = try? viewContext.fetch(request) else { return }
+            guard let recipe = favoriteRecipes.first else { return }
+            viewContext.delete(recipe)
+        }
+        try? viewContext.save()
+    }
+
+    static func addRecipeToFavorite(hit: Hit, viewContext: NSManagedObjectContext = AppDelegate.viewContext) {
         let favRecipe = RecipeEntity(context: viewContext)
         favRecipe.nameAtb = hit.recipe.label
         favRecipe.durationAtb =  String(hit.recipe.totalTime)
