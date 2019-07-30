@@ -16,6 +16,7 @@ extension UIViewController {
         case noRecipeFound
         case addIngredient
         case removeIngredient
+        case alreadyInFavorite
     }
 
     /**
@@ -35,6 +36,9 @@ extension UIViewController {
         case .removeIngredient:
             title = "Error"
             message = "Please control ingredients name or remove one"
+        case .alreadyInFavorite:
+            title = "You really like this recipe !"
+            message = "Check your favorites, it is already there"
         }
 
         let alertVC = UIAlertController(title: title, message: message, preferredStyle: .alert)

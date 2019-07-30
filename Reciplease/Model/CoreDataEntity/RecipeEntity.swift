@@ -41,6 +41,23 @@ class RecipeEntity: NSManagedObject {
         let image = hit.recipe.image
         guard let imageURL = URL(string: image) else { return }
         favRecipe.imageAtb = try? Data(contentsOf: imageURL)
+
+        let ingredient = IngredientEntity(context: viewContext)
+        ingredient.nameAtb = hit.recipe.ingredientLines[0]
+        ingredient.recipe = favRecipe
+
         try? viewContext.save()
+    }
+
+    // If a recipe is already in favorite, function returns true
+    static func recipeAlreadyInFavorite(name: String,
+                                        viewContext: NSManagedObjectContext = AppDelegate.viewContext) -> Bool {
+        let request: NSFetchRequest<RecipeEntity> = RecipeEntity.fetchRequest()
+        request.predicate = NSPredicate(format: "nameAtb = %@", name)
+        guard let favoriteRecipe = try? viewContext.fetch(request) else { return false }
+        if favoriteRecipe.isEmpty {
+            return false
+        }
+        return true
     }
 }

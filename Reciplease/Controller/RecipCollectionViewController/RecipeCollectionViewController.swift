@@ -52,7 +52,11 @@ extension RecipeCollectionViewController: UICollectionViewDelegateFlowLayout {
 extension RecipeCollectionViewController: RecipeCellDelegate {
     func addFavorite(cell: RecipeListCollectionViewCell) { // Add to favorite if favButton isOn
         guard let hit = cell.hit else { return }
-        RecipeEntity.addRecipeToFavorite(hit: hit)
+        if RecipeEntity.recipeAlreadyInFavorite(name: hit.recipe.label) {
+            presentAlert(ofType: .alreadyInFavorite) // Present alert if recipe in already in favorite
+        } else {
+            RecipeEntity.addRecipeToFavorite(hit: hit) // Add recipe to favorite
+        }
     }
 
     func deleteFavorite(cell: RecipeListCollectionViewCell) { // Remove from favorite if favButton !isOn

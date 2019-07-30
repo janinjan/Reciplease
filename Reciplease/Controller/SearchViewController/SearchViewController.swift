@@ -31,7 +31,6 @@ class SearchViewController: UIViewController {
             }
         }
     }
-
     var dataRecipes = [Hit]()
     let segueToCVidentifier = "segueToRecipesList"
 
@@ -44,6 +43,9 @@ class SearchViewController: UIViewController {
     }
 
     @IBAction func clearIngredient(_ sender: Any) {
+        if activityIndicator.isAnimating {
+            toggleActivityIndicator(shown: false)
+        }
         ingredientsList.removeAll()
         tableView.reloadData()
     }
