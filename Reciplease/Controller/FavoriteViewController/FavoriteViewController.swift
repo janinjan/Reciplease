@@ -15,6 +15,7 @@ class FavoriteViewController: UIViewController {
     var favoriteRecipes = RecipeEntity.fetchAll()
     let segueToFavoriteDetailViewIdentifier = "segueFromFavToDetailVC"
     var isInFavorite: Bool = false
+    var recipesNames = [String]()
 
     // MARK: - Outlets
     @IBOutlet weak var collectionView: UICollectionView!
@@ -22,20 +23,17 @@ class FavoriteViewController: UIViewController {
 
     // MARK: - Actions
     @IBAction func deleteButtonTapped(_ sender: UIBarButtonItem) {
-        let request: NSFetchRequest<RecipeEntity> = RecipeEntity.fetchRequest()
-        guard (try? AppDelegate.viewContext.fetch(request)) != nil else { return }
-        if let selectedCells = collectionView.indexPathsForSelectedItems {
-            // The selected cells will be reversed and sorted so the items with the highest index will be removed first.
-            let items = selectedCells.map { $0.item }.sorted().reversed()
-            // the items will be removed from the favoriteRecipes array
+        if let selectedCellsIndex = collectionView.indexPathsForSelectedItems {
+            let items = selectedCellsIndex.map { $0.item }.sorted().reversed()
             for item in items {
-                self.favoriteRecipes.remove(at: item)
+                guard let name = favoriteRecipes[item].nameAtb else { return }
+                recipesNames.append(name) // Add recipe's name to names array
+                favoriteRecipes.remove(at: item) // Remove items from the favoriteRecipes array
             }
-            // The selected cells will be deleted from the Collection View Controller and the trash icon will be hidden
-            collectionView.deleteItems(at: selectedCells)
-            navigationController?.setToolbarHidden(true, animated: true)
+            collectionView.deleteItems(at: selectedCellsIndex) // Delete selected cells from CollectionVC
+            navigationController?.setToolbarHidden(true, animated: true) // Hide the trash icon
             collectionView.reloadData()
-            try? AppDelegate.viewContext.save()
+            RecipeEntity.delete(names: recipesNames) // Delete selected recipes stored in CoreData
         }
     }
 
