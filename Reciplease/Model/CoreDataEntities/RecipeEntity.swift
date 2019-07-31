@@ -32,18 +32,18 @@ class RecipeEntity: NSManagedObject {
         try? viewContext.save()
     }
 
-    static func addRecipeToFavorite(hit: Hit, viewContext: NSManagedObjectContext = AppDelegate.viewContext) {
+    static func addRecipeToFavorite(recipe: Recipe, viewContext: NSManagedObjectContext = AppDelegate.viewContext) {
         let favRecipe = RecipeEntity(context: viewContext)
-        favRecipe.nameAtb = hit.recipe.label
-        favRecipe.durationAtb =  String(hit.recipe.totalTime)
-        favRecipe.yieldAtb = String(hit.recipe.yield)
+        favRecipe.nameAtb = recipe.label
+        favRecipe.durationAtb =  String(recipe.totalTime)
+        favRecipe.yieldAtb = String(recipe.yield)
 
-        let image = hit.recipe.image
+        let image = recipe.image
         guard let imageURL = URL(string: image) else { return }
         favRecipe.imageAtb = try? Data(contentsOf: imageURL)
 
         let ingredient = IngredientEntity(context: viewContext)
-        ingredient.nameAtb = hit.recipe.ingredientLines[0]
+        ingredient.nameAtb = recipe.ingredientLines[0]
         ingredient.recipe = favRecipe
 
         try? viewContext.save()

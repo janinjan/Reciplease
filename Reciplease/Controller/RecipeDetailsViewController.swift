@@ -23,7 +23,7 @@ class RecipeDetailsViewController: UIViewController {
     // MARK: - Properties
     var recipe: Recipe?
     var favoriteRecipes = RecipeEntity.fetchAll()
-    var isInFavorite: Bool = false
+    var recipeDetailsIsAskedFromFavorite: Bool = false
 
     // MARK: - Actions
     @IBAction func didTapGetDirections(_ sender: Any) {
@@ -32,21 +32,40 @@ class RecipeDetailsViewController: UIViewController {
         UIApplication.shared.open(url) // Open recipe directions in Safari
     }
 
+    @IBAction func didTapFavoriteButton(_ sender: Any) {
+        if favoriteButton.isOn {
+            controlAndAddFavorite()
+        } else {
+            RecipeEntity.delete(names: [recipe!.label])
+        }
+    }
+
     // MARK: - Methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        if isInFavorite == true {
+        navigationController?.delegate = self
+        if recipeDetailsIsAskedFromFavorite {
             favoriteButton.isHidden = true
             displayFavoriteRecipeInformation()
         } else {
+            if RecipeEntity.recipeAlreadyInFavorite(name: recipe!.label) {
+                favoriteButton.activateButton(bool: true)
+            }
             favoriteButton.isHidden = false
             displayRecipesInformation()
-            tableView.reloadData()
         }
         tableView.tableFooterView = UIView() // UIKit does not create the empty rows when the
         // table has a footer view displayed below the table cells.
         getDirectionButton.layer.cornerRadius = 6
         recipeDetailImageView.layer.cornerRadius = 6
+    }
+
+    private func controlAndAddFavorite() {
+        if RecipeEntity.recipeAlreadyInFavorite(name: recipe!.label) {
+            presentAlert(ofType: .alreadyInFavorite) // Present alert if recipe in already in favorite
+        } else {
+            RecipeEntity.addRecipeToFavorite(recipe: recipe!)
+        }
     }
 
     private func displayRecipesInformation() {
@@ -95,5 +114,42 @@ class RecipeDetailsViewController: UIViewController {
             totalTimeLabel.text = nil
             totalTimeImageView.isHidden = true
         }
+    }
+}
+
+// =========================================
+// MARK: - NavigationController Delegate
+// =========================================
+extension RecipeDetailsViewController: UINavigationControllerDelegate {
+    func navigationController(_ navigationController: UINavigationController,
+                              willShow viewController: UIViewController, animated: Bool) {
+        if viewController is RecipeCollectionViewController {
+            if RecipeEntity.recipeAlreadyInFavorite(name: recipe!.label) {
+                print("the recipe" + recipe!.label + "is in favorite")
+                favoriteButton.activateButton(bool: true)
+            }
+        }
+    }
+}
+
+// =========================================
+// MARK: - TableView data source
+// =========================================
+extension RecipeDetailsViewController: UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        guard let recipeDetails = recipe?.ingredientLines else { return 0 }
+        return recipeDetails.count
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ingredientCell", for: indexPath)
+        guard let recipeDetails = recipe else { return UITableViewCell() }
+        let ingredient = "- " + recipeDetails.ingredientLines[indexPath.row]
+        cell.textLabel?.text = ingredient
+        return cell
     }
 }

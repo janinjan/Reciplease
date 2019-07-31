@@ -40,6 +40,11 @@ class RecipeListCollectionViewCell: UICollectionViewCell {
             displayTime(hit.recipe.totalTime)  // Displays recipe's total time
             convertUrlToImage(hit.recipe.image) // Displays recipe's image
             ingredientLabel.text = hit.recipe.ingredientLines.joined(separator: ", ")
+            if RecipeEntity.recipeAlreadyInFavorite(name: hit.recipe.label) {
+                favButton.activateButton(bool: true)
+            } else {
+                favButton.activateButton(bool: false)
+            }
         }
     }
 

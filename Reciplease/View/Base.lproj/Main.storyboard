@@ -481,6 +481,9 @@
                                                 <state key="normal" title="♡">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="didTapFavoriteButton:" destination="Xsd-Dh-1jx" eventType="touchUpInside" id="KU7-Vp-lWt"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" red="0.97658449411392212" green="0.96872895956039429" blue="0.96433538198471069" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

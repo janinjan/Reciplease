@@ -28,12 +28,13 @@ class FavoriteViewController: UIViewController {
             for item in items {
                 guard let name = favoriteRecipes[item].nameAtb else { return }
                 recipesNames.append(name) // Add recipe's name to names array
-                favoriteRecipes.remove(at: item) // Remove items from the favoriteRecipes array
+                favoriteRecipes.remove(at: item) // Remove items from favoriteRecipes array
             }
             collectionView.deleteItems(at: selectedCellsIndex) // Delete selected cells from CollectionVC
-            navigationController?.setToolbarHidden(true, animated: true) // Hide the trash icon
-            collectionView.reloadData()
             RecipeEntity.delete(names: recipesNames) // Delete selected recipes stored in CoreData
+            collectionView.reloadData()
+            recipesNames = []
+            navigationController?.setToolbarHidden(true, animated: true) // Hide the trash icon
         }
     }
 
@@ -61,7 +62,7 @@ class FavoriteViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == segueToFavoriteDetailViewIdentifier {
             if let destination = segue.destination as? RecipeDetailsViewController {
-                destination.isInFavorite = true
+                destination.recipeDetailsIsAskedFromFavorite = true
                 destination.favoriteRecipes = favoriteRecipes // Perfom is in FavoriteVCDelegate extension
             }
         }
@@ -81,9 +82,11 @@ class FavoriteViewController: UIViewController {
     }
 }
 
-// MARK: - UICollectionViewDelegateFlowLayout
+// =========================================
+// MARK: - CollectionView Delegate FlowLayout
+// =========================================
 extension FavoriteViewController: UICollectionViewDelegateFlowLayout {
-    // Cell Size
+    // Defines the Cell Size
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -96,5 +99,53 @@ extension FavoriteViewController: UICollectionViewDelegateFlowLayout {
                         layout collectionViewLayout: UICollectionViewLayout,
                         minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 10
+    }
+}
+
+// =========================================
+// MARK: - CollectionView data source
+// =========================================
+extension FavoriteViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if favoriteRecipes.count == 0 {
+            collectionView.setEmptyMessage("Add recipes to favorite")
+        } else {
+            collectionView.restore()
+        }
+        return favoriteRecipes.count
+    }
+
+    func collectionView(_ collectionView: UICollectionView,
+                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let favoriteCell = collectionView.dequeueReusableCell(withReuseIdentifier: "favoriteCell", for: indexPath)
+            as? RecipeFavoriteListCollectionViewCell else { return UICollectionViewCell() }
+        favoriteCell.favorite = favoriteRecipes[indexPath.row]
+        favoriteCell.isInEditingMode = isEditing
+        return favoriteCell
+    }
+}
+
+// =========================================
+// MARK: - CollectionView delegate
+// =========================================
+extension FavoriteViewController: UICollectionViewDelegate {
+    // If a cell is selected the trash icon is displayed, otherwise it remains hidden
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if !isEditing {
+            favoriteRecipes = [favoriteRecipes[indexPath.row]]
+            performSegue(withIdentifier: segueToFavoriteDetailViewIdentifier, sender: self)
+            navigationController?.setToolbarHidden(true, animated: true)
+        } else {
+            navigationController?.setToolbarHidden(false, animated: true)
+        }
+    }
+
+    // If a cell is deselected and there are no other cells selected, the trash icon is hidden.
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        if isEditing {
+            if collectionView.indexPathsForSelectedItems!.count == 0 {
+                navigationController?.setToolbarHidden(true, animated: true)
+            }
+        }
     }
 }
