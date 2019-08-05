@@ -11,17 +11,26 @@ import UIKit
 class RecipeCollectionViewController: UIViewController {
 
     // MARK: - Outlets
+
     @IBOutlet weak var collectionView: UICollectionView!
 
     // MARK: - Properties
+
     var dataRecipes = [Hit]()
     var currentRecipe: Recipe?
     let segueToDetailViewIdentifier = "segueToDetailVC"
     var isInFavorite: Bool = false
 
     // MARK: - Methods
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.navigationBar.tintColor = .orangeRed
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        collectionView.reloadData()
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -37,6 +46,7 @@ class RecipeCollectionViewController: UIViewController {
 // =========================================
 // MARK: - CollectionView Delegate FlowLayout
 // =========================================
+
 extension RecipeCollectionViewController: UICollectionViewDelegateFlowLayout {
     // Cell Size
     func collectionView(_ collectionView: UICollectionView,
@@ -50,6 +60,7 @@ extension RecipeCollectionViewController: UICollectionViewDelegateFlowLayout {
 // =========================================
 // MARK: - Implement protocol RecipeCellDelegate
 // =========================================
+
 extension RecipeCollectionViewController: RecipeCellDelegate { // protocol defines in RecipListCollectionViewCell
     func addFavorite(cell: RecipeListCollectionViewCell) { // Add to favorite if favButton isOn
         guard let recipe = cell.hit?.recipe else { return }
@@ -69,6 +80,7 @@ extension RecipeCollectionViewController: RecipeCellDelegate { // protocol defin
 // =========================================
 // MARK: - CollectionView data source
 // =========================================
+
 extension RecipeCollectionViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return dataRecipes.count
@@ -90,6 +102,7 @@ extension RecipeCollectionViewController: UICollectionViewDataSource {
 // =========================================
 // MARK: - CollectionView delegate
 // =========================================
+
 extension RecipeCollectionViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         currentRecipe = dataRecipes[indexPath.row].recipe

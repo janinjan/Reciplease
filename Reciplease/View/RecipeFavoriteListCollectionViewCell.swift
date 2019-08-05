@@ -12,7 +12,9 @@ import UIKit
  It defines the favorite recipe list cell's elements
  */
 class RecipeFavoriteListCollectionViewCell: UICollectionViewCell {
+
     // MARK: - Outlets
+
     @IBOutlet weak var recipeListImageView: UIImageView!
     @IBOutlet weak var recipeListLabel: UILabel!
     @IBOutlet weak var yieldLabel: UILabel!
@@ -23,13 +25,16 @@ class RecipeFavoriteListCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var checkImageView: UIImageView!
 
     // MARK: - Properties
-    var favorite: RecipeEntity? { // Displays for FavoriteViewController
+
+    /// Displays for FavoriteViewController
+    var favorite: RecipeEntity? {
         didSet {
             guard let favorite = favorite else { return }
             recipeListLabel.text = favorite.nameAtb // Displays recipe's title
 
             guard let data = favorite.imageAtb else { return }
-            recipeListImageView.image = UIImage(data: data) // Displays recipe's image
+            guard let dataImage = UIImage(data: data) else { return }
+            recipeListImageView.image = UIImage.increaseContrast(dataImage) // Displays recipe's image
 
             guard let yield = favorite.yieldAtb else { return }
             yieldLabel.text = yield + " p" // Displays number of serving
@@ -46,9 +51,9 @@ class RecipeFavoriteListCollectionViewCell: UICollectionViewCell {
         }
     }
 
-    // Implement Editing Mode
+    /// Implement Editing Mode
     /**
-     * A property observer is created which will toggle the visibility of the checkmark label
+     * A property observer is created which will toggle the visibility of checkmark ImageView
      according if the collection view controller is in editing mode or not.
      */
     var isInEditingMode: Bool = false {
@@ -57,23 +62,28 @@ class RecipeFavoriteListCollectionViewCell: UICollectionViewCell {
             checkImageView.isHidden = !isInEditingMode
         }
     }
-    // Another property observer is created which will display/remove the checkmark when the cell is selected or not.
+    /// Implement Editing Mode
+    /**
+     * Another property observer is created which will display/remove the checkmark
+     when the cell is selected or not.
+     */
     override var isSelected: Bool {
         didSet {
             if isInEditingMode {
                 checkImageView.image = UIImage(named: isSelected ? "Checked" : "Unchecked")
-                let bgColor = isSelected ? #colorLiteral(red: 0.9882352941, green: 0.2392156863, blue: 0.2235294118, alpha: 1) : #colorLiteral(red: 0.9764705882, green: 0.968627451, blue: 0.9647058824, alpha: 1)
+                let bgColor = isSelected ? UIColor.orangeRed : .whiteGrey
                 whiteView.backgroundColor = bgColor
             }
         }
     }
 
     // MARK: - Methods
+
     override func awakeFromNib() {
         addShadowsToCell()
     }
 
-    // Add shadows and border to cells
+    /// Add shadows and border to cells
     private func addShadowsToCell() {
         contentView.layer.cornerRadius = 8.0
         whiteView.layer.cornerRadius = 8.0
@@ -86,19 +96,5 @@ class RecipeFavoriteListCollectionViewCell: UICollectionViewCell {
         layer.shadowRadius = 1.0
         layer.shadowOpacity = 0.7
         layer.masksToBounds = false
-    }
-
-    // Add contrast to recipe image
-    private func increaseContrast(_ image: UIImage) -> UIImage {
-        guard let inputImage = CIImage(image: image) else { return UIImage() }
-        let parameters = [
-            "inputContrast": NSNumber(value: 1.05),
-            "inputSaturation": NSNumber(value: 1.05)
-        ]
-        let outputImage = inputImage.applyingFilter("CIColorControls", parameters: parameters)
-
-        let context = CIContext(options: nil)
-        guard let img = context.createCGImage(outputImage, from: outputImage.extent) else { return UIImage() }
-        return UIImage(cgImage: img)
     }
 }

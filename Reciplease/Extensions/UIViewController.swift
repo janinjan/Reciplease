@@ -9,9 +9,8 @@
 import UIKit
 
 extension UIViewController {
-    /**
-     * enum for every error cases
-     */
+
+    /// enum for every error cases
     enum AlertType {
         case noRecipeFound
         case addIngredient
@@ -19,9 +18,7 @@ extension UIViewController {
         case alreadyInFavorite
     }
 
-    /**
-     * Displays an alert with a custom message by using switch
-     */
+    /// Displays an alert with a custom message by using switch
     func presentAlert(ofType type: AlertType) {
         var message: String
         var title: String

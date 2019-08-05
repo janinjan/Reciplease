@@ -10,6 +10,7 @@ import Foundation
 import CoreData
 
 class RecipeEntity: NSManagedObject {
+
     static func fetchAll(viewContext: NSManagedObjectContext = AppDelegate.viewContext) -> [RecipeEntity] {
         let request: NSFetchRequest<RecipeEntity> = RecipeEntity.fetchRequest()
         guard let favoriteRecipes = try? viewContext.fetch(request) else { return [] }
@@ -37,15 +38,17 @@ class RecipeEntity: NSManagedObject {
         favRecipe.nameAtb = recipe.label
         favRecipe.durationAtb =  String(recipe.totalTime)
         favRecipe.yieldAtb = String(recipe.yield)
+        favRecipe.urlAtb = recipe.url
 
         let image = recipe.image
         guard let imageURL = URL(string: image) else { return }
         favRecipe.imageAtb = try? Data(contentsOf: imageURL)
 
-        let ingredient = IngredientEntity(context: viewContext)
-        ingredient.nameAtb = recipe.ingredientLines[0]
-        ingredient.recipe = favRecipe
-
+        for ingredient in recipe.ingredientLines {
+            let ingredientEntity = IngredientEntity(context: viewContext)
+            ingredientEntity.nameAtb = ingredient
+            ingredientEntity.recipe = favRecipe
+        }
         try? viewContext.save()
     }
 

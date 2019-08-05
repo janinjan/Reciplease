@@ -11,6 +11,7 @@ import UIKit
 class RecipeDetailsViewController: UIViewController {
 
     // MARK: - Outlets
+
     @IBOutlet weak var recipeDetailImageView: UIImageView!
     @IBOutlet weak var recipeListLabel: UILabel!
     @IBOutlet weak var yieldLabel: UILabel!
@@ -21,15 +22,23 @@ class RecipeDetailsViewController: UIViewController {
     @IBOutlet weak var favoriteButton: FavoriteButton!
 
     // MARK: - Properties
+
     var recipe: Recipe?
-    var favoriteRecipes = RecipeEntity.fetchAll()
+    var favoriteRecipe: RecipeEntity?
     var recipeDetailsIsAskedFromFavorite: Bool = false
 
     // MARK: - Actions
+
     @IBAction func didTapGetDirections(_ sender: Any) {
-        guard let currentRecipeUrl = recipe?.url else { return }
-        guard let url = URL(string: currentRecipeUrl) else { return }
-        UIApplication.shared.open(url) // Open recipe directions in Safari
+        if recipeDetailsIsAskedFromFavorite {
+            guard let currendFavoriteRecipeUrl = favoriteRecipe?.urlAtb else { return }
+            guard let url = URL(string: currendFavoriteRecipeUrl) else { return }
+            UIApplication.shared.open(url) // Open favorite recipe directions in Safari
+        } else {
+            guard let currentRecipeUrl = recipe?.url else { return }
+            guard let url = URL(string: currentRecipeUrl) else { return }
+            UIApplication.shared.open(url) // Open recipe directions in Safari
+        }
     }
 
     @IBAction func didTapFavoriteButton(_ sender: Any) {
@@ -41,9 +50,14 @@ class RecipeDetailsViewController: UIViewController {
     }
 
     // MARK: - Methods
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.delegate = self
+        setup()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         if recipeDetailsIsAskedFromFavorite {
             favoriteButton.isHidden = true
             displayFavoriteRecipeInformation()
@@ -54,8 +68,11 @@ class RecipeDetailsViewController: UIViewController {
             favoriteButton.isHidden = false
             displayRecipesInformation()
         }
-        tableView.tableFooterView = UIView() // UIKit does not create the empty rows when the
-        // table has a footer view displayed below the table cells.
+    }
+
+    private func setup() {
+        tableView.tableFooterView = UIView() // UIKit does not create the empty rows when the table
+        // has a footer view displayed below the table cells.
         getDirectionButton.layer.cornerRadius = 6
         recipeDetailImageView.layer.cornerRadius = 6
     }
@@ -92,17 +109,18 @@ class RecipeDetailsViewController: UIViewController {
     }
 
     private func displayFavoriteRecipeInformation() {
-        recipeListLabel.text = favoriteRecipes[0].nameAtb
+        recipeListLabel.text = favoriteRecipe?.nameAtb
 
-        guard let time = favoriteRecipes[0].durationAtb else { return }
+        guard let time = favoriteRecipe?.durationAtb else { return }
         guard let recipeIntTime = Int(time) else { return }
         displayTime(recipeIntTime)
 
-        guard let yield = favoriteRecipes[0].yieldAtb else { return }
+        guard let yield = favoriteRecipe?.yieldAtb else { return }
         yieldLabel.text = String(yield) + " people"
 
-        guard let data = favoriteRecipes[0].imageAtb else { return }
-        recipeDetailImageView.image = UIImage(data: data) // Displays recipe's image
+        guard let data = favoriteRecipe?.imageAtb else { return }
+        guard let dataImage = UIImage(data: data) else { return }
+        recipeDetailImageView.image = UIImage.increaseContrast(dataImage) // Displays recipe's image
     }
 
     // Displays recipe total time
@@ -118,38 +136,35 @@ class RecipeDetailsViewController: UIViewController {
 }
 
 // =========================================
-// MARK: - NavigationController Delegate
-// =========================================
-extension RecipeDetailsViewController: UINavigationControllerDelegate {
-    func navigationController(_ navigationController: UINavigationController,
-                              willShow viewController: UIViewController, animated: Bool) {
-        if viewController is RecipeCollectionViewController {
-            if RecipeEntity.recipeAlreadyInFavorite(name: recipe!.label) {
-                print("the recipe" + recipe!.label + "is in favorite")
-                favoriteButton.activateButton(bool: true)
-            }
-        }
-    }
-}
-
-// =========================================
 // MARK: - TableView data source
 // =========================================
+
 extension RecipeDetailsViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let recipeDetails = recipe?.ingredientLines else { return 0 }
-        return recipeDetails.count
+        if recipeDetailsIsAskedFromFavorite {
+            let ingredientEntities = favoriteRecipe?.ingredients?.allObjects as? [IngredientEntity]
+            return ingredientEntities?.count ?? 0
+        } else {
+            let recipeDetails = recipe?.ingredientLines
+            return recipeDetails?.count ?? 0
+        }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ingredientCell", for: indexPath)
-        guard let recipeDetails = recipe else { return UITableViewCell() }
-        let ingredient = "- " + recipeDetails.ingredientLines[indexPath.row]
-        cell.textLabel?.text = ingredient
-        return cell
+        if recipeDetailsIsAskedFromFavorite {
+            let ingredientEntities = favoriteRecipe?.ingredients?.allObjects as? [IngredientEntity]
+            cell.textLabel?.text = ingredientEntities?[indexPath.row].nameAtb
+            return cell
+        } else {
+            guard let recipeDetails = recipe else { return UITableViewCell() }
+            let ingredient = "- " + recipeDetails.ingredientLines[indexPath.row]
+            cell.textLabel?.text = ingredient
+            return cell
+        }
     }
 }

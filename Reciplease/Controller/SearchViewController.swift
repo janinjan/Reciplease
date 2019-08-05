@@ -11,6 +11,7 @@ import UIKit
 class SearchViewController: UIViewController {
 
     // MARK: - Outlets
+
     @IBOutlet weak var whatInFridgeLabelConstraint: NSLayoutConstraint! // outlet for UIView animation
     @IBOutlet weak var searchView: UIView!
     @IBOutlet weak var ingredientTextField: UITextField!
@@ -21,11 +22,12 @@ class SearchViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
 
     // MARK: - Properties
+
     let recipeService = RecipeService()
     var ingredientsList = [String]() {
         didSet { // Show "Clear" bar button item if ingredientList is not empty
             if ingredientsList.count > 0 {
-                toggleNavigationButtonItem(shown: true, tintColor: #colorLiteral(red: 0.2470588235, green: 0.5843137255, blue: 0.9921568627, alpha: 1))
+                toggleNavigationButtonItem(shown: true, tintColor: .orangeRed)
             } else {
                 toggleNavigationButtonItem(shown: false, tintColor: .clear)
             }
@@ -35,6 +37,7 @@ class SearchViewController: UIViewController {
     let segueToCVidentifier = "segueToRecipesList"
 
     // MARK: - Actions
+
     @IBAction func addIngredient(_ sender: Any) {
         getIngredientName()
         tableView.reloadData()
@@ -59,6 +62,7 @@ class SearchViewController: UIViewController {
     }
 
     // MARK: - Methods
+
     override func viewDidLoad() {
         super.viewDidLoad()
         searchRecipesButton.layer.cornerRadius = 6
@@ -110,24 +114,25 @@ class SearchViewController: UIViewController {
             return
         }
         // Get recipes list
-        recipeService.getRecipe(ingredientLists: ingredientsList) { (success, data) in
+        recipeService.getRecipe(ingredientLists: ingredientsList) { [weak self] (success, data) in
             if let data = data, success {
-                self.toggleActivityIndicator(shown: false)
-                self.dataRecipes = data.hits
-                if self.dataRecipes.isEmpty { // If ingredient entered name is invalid, data from API call is empty
-                    self.presentAlert(ofType: .removeIngredient)
+                self?.toggleActivityIndicator(shown: false)
+                self?.dataRecipes = data.hits
+                if (self?.dataRecipes.isEmpty)! { // If ingredient entered name is invalid, data from API call is empty
+                    self?.presentAlert(ofType: .removeIngredient)
                 } else {
-                    self.performToCollectionView()
+                    self?.performToCollectionView()
                 }
             } else {
-                self.presentAlert(ofType: .noRecipeFound)
-                self.toggleActivityIndicator(shown: false)
+                self?.presentAlert(ofType: .noRecipeFound)
+                self?.toggleActivityIndicator(shown: false)
             }
         }
     }
 }
 
 // MARK: - Segue to CollectionView
+
 extension SearchViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == segueToCVidentifier {
@@ -144,6 +149,7 @@ extension SearchViewController {
 }
 
 // MARK: - UITextFieldDelegate Dismiss keyboard
+
 extension SearchViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
@@ -155,6 +161,7 @@ extension SearchViewController: UITextFieldDelegate {
 // =========================================
 // MARK: - TableView data source
 // =========================================
+
 extension SearchViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -183,6 +190,7 @@ extension SearchViewController: UITableViewDataSource {
 // =========================================
 // MARK: - TableView delegate
 // =========================================
+
 extension SearchViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let label = UILabel()

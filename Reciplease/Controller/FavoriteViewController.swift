@@ -12,16 +12,20 @@ import CoreData
 class FavoriteViewController: UIViewController {
 
     // MARK: - Properties
+
     var favoriteRecipes = RecipeEntity.fetchAll()
+    var favoriteRecipe: RecipeEntity?
     let segueToFavoriteDetailViewIdentifier = "segueFromFavToDetailVC"
     var isInFavorite: Bool = false
     var recipesNames = [String]()
 
     // MARK: - Outlets
+
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var clearAllButton: UIBarButtonItem!
 
     // MARK: - Actions
+
     @IBAction func deleteButtonTapped(_ sender: UIBarButtonItem) {
         if let selectedCellsIndex = collectionView.indexPathsForSelectedItems {
             let items = selectedCellsIndex.map { $0.item }.sorted().reversed()
@@ -45,25 +49,21 @@ class FavoriteViewController: UIViewController {
     }
 
     // MARK: - Methods
+
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.isToolbarHidden = true // Toolbar with Trash icon is hidden
         navigationItem.leftBarButtonItem = editButtonItem // Add Edit Button item in navigation bar
         favoriteRecipes = RecipeEntity.fetchAll()
         collectionView.reloadData()
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        favoriteRecipes = RecipeEntity.fetchAll()
-        collectionView.reloadData()
+        self.navigationController?.navigationBar.tintColor = .orangeRed
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == segueToFavoriteDetailViewIdentifier {
             if let destination = segue.destination as? RecipeDetailsViewController {
                 destination.recipeDetailsIsAskedFromFavorite = true
-                destination.favoriteRecipes = favoriteRecipes // Perfom is in FavoriteVCDelegate extension
+                destination.favoriteRecipe = favoriteRecipe // Perfom is in FavoriteVCDelegate extension
             }
         }
     }
@@ -85,6 +85,7 @@ class FavoriteViewController: UIViewController {
 // =========================================
 // MARK: - CollectionView Delegate FlowLayout
 // =========================================
+
 extension FavoriteViewController: UICollectionViewDelegateFlowLayout {
     // Defines the Cell Size
     func collectionView(_ collectionView: UICollectionView,
@@ -105,6 +106,7 @@ extension FavoriteViewController: UICollectionViewDelegateFlowLayout {
 // =========================================
 // MARK: - CollectionView data source
 // =========================================
+
 extension FavoriteViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if favoriteRecipes.count == 0 {
@@ -128,11 +130,12 @@ extension FavoriteViewController: UICollectionViewDataSource {
 // =========================================
 // MARK: - CollectionView delegate
 // =========================================
+
 extension FavoriteViewController: UICollectionViewDelegate {
     // If a cell is selected the trash icon is displayed, otherwise it remains hidden
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if !isEditing {
-            favoriteRecipes = [favoriteRecipes[indexPath.row]]
+            favoriteRecipe = favoriteRecipes[indexPath.row]
             performSegue(withIdentifier: segueToFavoriteDetailViewIdentifier, sender: self)
             navigationController?.setToolbarHidden(true, animated: true)
         } else {

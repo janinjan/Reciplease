@@ -9,13 +9,16 @@
 import Foundation
 
 class RecipeService {
+
     // MARK: - Properties
+
     private let edamamSession: EdemamProtocol
     // ID and Key for Edamam Search API
     let appID = valueForAPIKey(named: "app_id")
     let appKey = valueForAPIKey(named: "app_key")
 
     // MARK: - Inits
+
     init(edamamSession: EdemamProtocol = EdamamSession()) {
         self.edamamSession = edamamSession
     }

@@ -9,6 +9,8 @@
 import UIKit
 
 extension UICollectionView {
+
+    /// Displays a custom message when array is empty
     func setEmptyMessage(_ message: String) {
         let label = UILabel()
         label.text = message
