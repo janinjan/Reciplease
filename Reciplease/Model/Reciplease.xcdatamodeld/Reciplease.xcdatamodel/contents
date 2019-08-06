@@ -13,7 +13,7 @@
         <relationship name="ingredients" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="IngredientEntity" inverseName="recipe" inverseEntity="IngredientEntity" syncable="YES"/>
     </entity>
     <elements>
-        <element name="IngredientEntity" positionX="-241.30859375" positionY="-7.671875" width="128" height="73"/>
-        <element name="RecipeEntity" positionX="-42.171875" positionY="-6.47265625" width="128" height="133"/>
+        <element name="IngredientEntity" positionX="-241.30859375" positionY="-7.671875" width="128" height="75"/>
+        <element name="RecipeEntity" positionX="-42.171875" positionY="-6.47265625" width="128" height="135"/>
     </elements>
 </model>

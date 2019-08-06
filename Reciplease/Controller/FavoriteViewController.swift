@@ -59,6 +59,12 @@ class FavoriteViewController: UIViewController {
         self.navigationController?.navigationBar.tintColor = .orangeRed
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        favoriteRecipes = RecipeEntity.fetchAll()
+        collectionView.reloadData()
+    }
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == segueToFavoriteDetailViewIdentifier {
             if let destination = segue.destination as? RecipeDetailsViewController {

@@ -10,10 +10,10 @@ import UIKit
 
 extension UIColor {
 
-    public class var orangeRed: UIColor {
+    static var orangeRed: UIColor {
         return UIColor(red: 252/255, green: 61/255, blue: 57/255, alpha: 1)
     }
-    public class var whiteGrey: UIColor {
+    static var whiteGrey: UIColor {
         return UIColor(red: 249/255, green: 247/255, blue: 246/255, alpha: 1)
     }
 }

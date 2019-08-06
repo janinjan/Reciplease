@@ -16,6 +16,7 @@ class CoredataWithMockContainerTests: XCTestCase {
 
     lazy var mockContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "Reciplease")
+        container.persistentStoreDescriptions[0].url = URL(fileURLWithPath: "/dev/null")
         container.loadPersistentStores(completionHandler: { (_, error) in
             XCTAssertNil(error)
         })
@@ -55,16 +56,6 @@ class CoredataWithMockContainerTests: XCTestCase {
         try? mockContainer.viewContext.save()
         // When
         RecipeEntity.deleteAll(viewContext: mockContainer.viewContext)
-        // Then
-        XCTAssertEqual(RecipeEntity.fetchAll(viewContext: mockContainer.viewContext), [])
-    }
-
-    func testDeleteOneFavoriteRecipeInPersistentContainer() {
-        // Given
-        addRecipeToFavorite(into: mockContainer.viewContext)
-        try? mockContainer.viewContext.save()
-        // When
-        RecipeEntity.delete(names: ["Chicken, Lemon, And Dill With Orzo"])
         // Then
         XCTAssertEqual(RecipeEntity.fetchAll(viewContext: mockContainer.viewContext), [])
     }
@@ -118,5 +109,23 @@ class CoredataWithMockContainerTests: XCTestCase {
         addIngredientToFavorite(into: mockContainer.viewContext)
         try? mockContainer.viewContext.save()
         XCTAssertNotNil(IngredientEntity.fetchAll(viewContext: mockContainer.viewContext))
+    }
+
+    func testDeleteRecipeShouldDeleteIngredientsToo() {
+
+        let label = "Chicken, Lemon, And Dill With Orzo"
+        let yield = 6
+        let totalTime = 0
+        let image = "https://www.edamam.com/web-img/632/632e302a645d5baade2d351536f06cc5.jpg"
+        let url = "http://www.marthastewart.com/317393/chicken-lemon-and-dill-with-orzo"
+
+        let recipe = Recipe(label: label, image: image, url: url, yield: yield,
+                            ingredientLines: ["4 blabla"], totalTime: totalTime)
+        RecipeEntity.addRecipeToFavorite(recipe: recipe, viewContext: mockContainer.viewContext)
+
+        RecipeEntity.delete(names: [recipe.label], viewContext: mockContainer.viewContext)
+
+        XCTAssertTrue(RecipeEntity.fetchAll(viewContext: mockContainer.viewContext).isEmpty)
+        XCTAssertEqual(IngredientEntity.fetchAll(viewContext: mockContainer.viewContext), [])
     }
 }
