@@ -108,4 +108,15 @@ extension RecipeCollectionViewController: UICollectionViewDelegate {
         currentRecipe = dataRecipes[indexPath.row].recipe
         performSegue(withIdentifier: segueToDetailViewIdentifier, sender: self)
     }
+
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell,
+                        forItemAt indexPath: IndexPath) {
+        let translationMovement = CATransform3DTranslate(CATransform3DIdentity, 0, 10, 0)
+        cell.layer.transform = translationMovement
+        cell.alpha = 0
+        UIView.animate(withDuration: 0.75) {
+            cell.layer.transform = CATransform3DIdentity
+            cell.alpha = 1
+        }
+    }
 }
