@@ -97,7 +97,7 @@ class SearchViewController: UIViewController {
 
     private func getIngredientName() {
         guard let enteredText = ingredientTextField.text else { return }
-        if enteredText == "" || enteredText == " " || enteredText == "." {
+        if enteredText.isBlank == true || enteredText == "." {
             print("nothing to add")
         } else {
             let formattedEnteredText = enteredText.replacingOccurrences(of: " ", with: "")
